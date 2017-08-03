@@ -1,13 +1,15 @@
 #include <SparkFun_Si7021_Breakout_Library.h>
 #include <Wire.h>
 
-#define ThermocoupleUse 1
+#define ThermocoupleUse 1   //Set to 1 if you want to run test without temperature sensor.
 
 //float humidity = 0;
 float tempC = 0;
 int speedVal = 0;
 long entry = 0;
-unsigned long timeVal = 10000;
+
+//Change time of polling system in ms intervals.
+unsigned long timeVal = 20000;  
 
 int power = A3;
 int GND = A2;
@@ -17,9 +19,9 @@ int tempSense = A4;
 char fanSpeed[7];
 #endif
 
-int fan1 = 3;
-int fan2 = 5;
-int fan3 = 6;
+int fan1 = 3;   //Exhaust Fan
+int fan2 = 5;   //Stimulation Fan
+int fan3 = 6;   //Input Fan
 
 Weather sensor;
 
@@ -67,7 +69,7 @@ void loop() {
   entry++;
   printText();
 
-  delay(timeVal); //5 minute delay
+  delay(timeVal); //Sampling delay
  /*if(tempC>=25 && tempC<30){
     fanSpeedCon(256); //25% duty cycle
  }
@@ -118,19 +120,23 @@ void fanControlLoop(){
     memset(fanSpeed, 0, sizeof(fanSpeed));
     
      if(tempC>=220 && tempC<420){
-       fanSpeedCon(256); //25% duty cycle
+       //fanSpeedCon(256); //25% duty cycle
+       fanSpeedCon(64); //25% duty cycle
        strcpy(fanSpeed, "Low");
      }
      else if(tempC>=420 && tempC<600){
-       fanSpeedCon(768); //75% duty cycle
+      //fanSpeedCon(768); //75% duty cycle
+      fanSpeedCon(192); //75% duty cycle
        strcpy(fanSpeed, "Medium");
      }
      else if(tempC<220){
+       //fanSpeedCon(0); //0% duty cycle
        fanSpeedCon(0); //0% duty cycle
        strcpy(fanSpeed, "Off");
      }
      else if(tempC>=600){
-       fanSpeedCon(1023);  //100% duty cycle
+       //fanSpeedCon(1023);  //100% duty cycle
+       fanSpeedCon(255);  //100% duty cycle
        strcpy(fanSpeed, "High");
      }
   #else
