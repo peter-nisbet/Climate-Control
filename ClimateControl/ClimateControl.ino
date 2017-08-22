@@ -12,7 +12,7 @@ long entry = 0;
 //Change time of polling system in ms intervals.
 unsigned long timeVal = 20000;  
 
-char fanSpeed[7];
+char fanSpeed[13];
 
 int fan1 = 3;   //Exhaust Fan
 int fan2 = 5;   //Stimulation Fan
@@ -202,7 +202,7 @@ void fanControlLoop(){
     else if(tempC>=22 && tempC<23){
        fanSpeedCon(100); //75% duty cycle
        strcpy(fanSpeed, "Low-Medium");
-    }   
+    }  
     else if(tempC>=23 && tempC<24){
        fanSpeedCon(130); //75% duty cycle
        strcpy(fanSpeed, "Medium");
@@ -218,6 +218,6 @@ void fanControlLoop(){
     else if(tempC>=25){
        fanSpeedCon(255);  //100% duty cycle
        strcpy(fanSpeed, "Max!");
-    }       
+    }     
 }
 
